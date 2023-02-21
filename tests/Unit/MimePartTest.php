@@ -81,7 +81,7 @@ class MimePartTest extends TestCase
 
         $mimePart = new MimePart(
             [
-                'Content-Type' => 'multipart/mixed; boundary="'.$boundary.'"',
+                'Content-Type' => 'multipart/mixed; boundary="' . $boundary . '"',
             ]
         );
         $mimePart->addPart('1');
@@ -92,8 +92,7 @@ class MimePartTest extends TestCase
 
         $mimePart = new MimePart(
             [
-                'Content-Type' => 'multipart/mixed;
-boundary="'.$boundary.'"',
+                'Content-Type' => 'multipart/mixed; boundary="' . $boundary . '"',
             ]
         );
         $mimePart->addPart('1');
@@ -145,7 +144,7 @@ boundary="'.$boundary.'"',
     public function testCreateIfBinaryPartNotBinary(): void
     {
         $contents = $this->loadFixture('signed-msg.txt');
-        $payload = MimePart::fromString($contents);
+        $payload  = MimePart::fromString($contents);
 
         self::assertNull(MimePart::createIfBinaryPart($payload));
     }
@@ -153,7 +152,7 @@ boundary="'.$boundary.'"',
     public function testCreateIfBinaryPartBinary(): void
     {
         $contents = $this->loadFixture('si_signed.mdn');
-        $payload = MimePart::fromString($contents);
+        $payload  = MimePart::fromString($contents);
 
         self::assertInstanceOf(MimePart::class, MimePart::createIfBinaryPart($payload));
     }
