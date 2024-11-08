@@ -8,7 +8,7 @@
 The PHPAS2 application enables you to transmit and receive AS2 messages with EDI-X12, EDIFACT, XML, or binary payloads
 between trading partners.
 
-This is a fork of [tiamo/phpas2](https://github.com/tiamo/phpas2)
+This is a fork of [tiamo/phpas2](https://github.com/astralab-hq/phpas2)
 
 ## Requirements
 
