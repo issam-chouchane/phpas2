@@ -1,15 +1,15 @@
 {
-    "name": "astralab/phpas2",
+    "name": "issam-chouchan/phpas2",
     "description": "PHPAS2 is a php-based implementation of the EDIINT AS2 standard",
     "type": "library",
     "version": "2.0.1",
     "authors": [
         {
-            "name": "Vladyslav K",
-            "email": "vk.tiamo@gmail.com"
+            "name": "Issam Chouchane",
+            "email": "chouchane@gmail.com"
         }
     ],
-    "keywords": [
+     "keywords": [
         "edi",
         "ediint",
         "as2",
