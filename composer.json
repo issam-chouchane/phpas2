@@ -24,7 +24,8 @@
         "ext-ctype": "*",
         "guzzlehttp/guzzle": "^6.5 || ^7.8",
         "phpseclib/phpseclib": "^3.0.8",
-        "psr/log": "^3.0.2"
+        "psr/log": "^3.0.2",
+        "issam-chouchan/phpas2": "^2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.5",
