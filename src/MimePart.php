@@ -5,6 +5,7 @@
 namespace AS2;
 
 use GuzzleHttp\Psr7\MessageTrait;
+use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\MessageInterface as PsrMessageInterface;
 use Psr\Http\Message\RequestInterface;
 
@@ -305,7 +306,7 @@ class MimePart implements PsrMessageInterface
      *
      * @return string
      */
-    public function getBody()
+    public function getBody() : StreamInterface
     {
         $body = $this->body;
         if (count($this->parts) > 0) {
