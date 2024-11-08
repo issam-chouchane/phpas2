@@ -1,12 +1,12 @@
 {
-    "name": "astralab/phpas2",
+    "name": "issam-chouchan/phpas2",
     "description": "PHPAS2 is a php-based implementation of the EDIINT AS2 standard",
     "type": "library",
     "version": "2.0.1",
     "authors": [
         {
-            "name": "Vladyslav K",
-            "email": "vk.tiamo@gmail.com"
+            "name": "Issam Chouchane",
+            "email": "chouchaneo@gmail.com"
         }
     ],
     "keywords": [
@@ -18,13 +18,13 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.1 || ^7.2 || ^7.3 || ^7.4 || ^8.0 || ^8.1",
+        "php": "^7.1 || ^7.2 || ^7.3 || ^7.4 || ^8.0 || ^8.1 || ^8.2 || ^8.3",
         "ext-openssl": "*",
         "ext-zlib": "*",
         "ext-ctype": "*",
-        "guzzlehttp/guzzle": "^6.5 || ^7.0",
+        "guzzlehttp/guzzle": "^6.5 || ^7.8",
         "phpseclib/phpseclib": "^3.0.8",
-        "psr/log": "^3.0.0"
+        "psr/log": "^3.0.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.5",
