@@ -9,7 +9,7 @@
             "email": "chouchane@gmail.com"
         }
     ],
-    "keywords": [
+     "keywords": [
         "edi",
         "ediint",
         "as2",
@@ -18,14 +18,13 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.1 || ^7.2 || ^7.3 || ^7.4 || ^8.0 || ^8.1 || ^8.2 || ^8.3",
+        "php": "^7.1 || ^7.2 || ^7.3 || ^7.4 || ^8.0 || ^8.1",
         "ext-openssl": "*",
         "ext-zlib": "*",
         "ext-ctype": "*",
-        "guzzlehttp/guzzle": "^6.5 || ^7.8",
+        "guzzlehttp/guzzle": "^6.5 || ^7.0",
         "phpseclib/phpseclib": "^3.0.8",
-        "psr/log": "^3.0.2",
-        "issam-chouchan/phpas2": "^2.0"
+        "psr/log": "^3.0.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.5",
@@ -41,7 +40,7 @@
             "AS2\\Tests\\": "tests/"
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
         "sort-packages": true,
