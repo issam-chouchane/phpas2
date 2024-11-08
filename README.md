@@ -19,7 +19,7 @@ This is a fork of [tiamo/phpas2](https://github.com/tiamo/phpas2)
 ## Installation
 
 ```
-composer require astralab/phpas2
+composer require issam-chouchane/phpas2
 ```
 
 ## Usage
