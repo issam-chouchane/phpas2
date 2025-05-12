@@ -8,6 +8,7 @@ use GuzzleHttp\Psr7\MessageTrait;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\MessageInterface as PsrMessageInterface;
 use Psr\Http\Message\RequestInterface;
+use GuzzleHttp\Psr7\Stream;
 
 class MimePart implements PsrMessageInterface
 {
@@ -312,9 +313,7 @@ class MimePart implements PsrMessageInterface
         if (count($this->parts) > 0) {
             $boundary = $this->getParsedHeader('content-type', 0, 'boundary');
             if ($boundary) {
-                //                $body .= self::EOL;
                 foreach ($this->getParts() as $part) {
-                    //                    $body .= self::EOL;
                     $body .= '--' . $boundary . self::EOL;
                     $body .= $part->toString() . self::EOL;
                 }
@@ -322,7 +321,11 @@ class MimePart implements PsrMessageInterface
             }
         }
 
-        return $body;
+        $stream = fopen('php://temp', 'r+');
+        fwrite($stream, $body);
+        rewind($stream);
+
+        return new Stream($stream);
     }
 
     /**
