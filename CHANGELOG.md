@@ -1,5 +1,10 @@
 # Change Log
 
+## 2.0.7
+* Guzzle ^7.9
+* Added support php 8.3
+* Added github actions
+
 ## 2.0.0
 * Minimum php version is 7.1
 * Added support php 8.0
