@@ -144,15 +144,6 @@ class Management implements LoggerAwareInterface
             //                $micAlgo = trim($micAlgo);
             //            }
 
-            $message->setMic(CryptoHelper::calculateMIC($micContent, $signAlgo));
-
-            $this->getLogger()->debug(
-                'Calculate MIC',
-                [
-                    'mic' => $message->getMic(),
-                ]
-            );
-
             $payload = CryptoHelper::sign(
                 $payload,
                 $sender->getCertificate(),
@@ -162,6 +153,23 @@ class Management implements LoggerAwareInterface
             );
 
             $message->setSigned();
+
+            $contentPart = $payload->getPart(0);
+            if ($contentPart !== null) {
+                // Hash the full Part 0 MIME entity (headers + blank line + body) — this
+                // is exactly what OpenSSL's PKCS#7 SignerInfo messageDigest covers, and
+                // what conformant partners (e.g. mendelson) return as Received-Content-MIC.
+                $digestAlgo = str_replace('-', '', strtolower($signAlgo));
+                $message->setMic(
+                    base64_encode(hash($digestAlgo, (string) $contentPart, true))
+                    . ', ' . $signAlgo
+                );
+            } else {
+                // Fallback for unexpected payload structure.
+                $message->setMic(CryptoHelper::calculateMIC($micContent, $signAlgo));
+            }
+
+            $this->getLogger()->debug('Calculate MIC', ['mic' => $message->getMic()]);
         }
 
         // Compress the message after sign if requested in the profile
@@ -452,7 +460,13 @@ class Management implements LoggerAwareInterface
             if ($part->getParsedHeader('content-type', 0, 0) === 'message/disposition-notification') {
                 $this->getLogger()->debug('Found MDN report for message', [$messageId]);
                 try {
-                    $bodyPayload = MimePart::fromString($part->getBody());
+                    // The body of a message/disposition-notification part is RFC 3462 format:
+                    // a block of headers with no blank-line separator and no body. Parsing it
+                    // with MimePart::fromString() fails because Utils::parseMessage() requires
+                    // a blank line to identify headers, so the entire content ends up as the
+                    // body and no headers are extracted. Parse as a raw header block instead.
+                    $mdnHeaders = Utils::parseHeaders((string) $part->getBody());
+                    $bodyPayload = new MimePart($mdnHeaders);
                     if ($bodyPayload->hasHeader('disposition')) {
                         $mdnStatus = $bodyPayload->getParsedHeader('Disposition', 0, 1);
                         if ($mdnStatus === 'processed') {
@@ -466,8 +480,9 @@ class Management implements LoggerAwareInterface
                                 $message->getMic() &&
                                 Utils::normalizeMic($message->getMic()) !== Utils::normalizeMic($receivedMic)
                             ) {
-                                throw new \RuntimeException(sprintf('The Message Integrity Code (MIC) does not match the sent AS2 message (required: %s, returned: %s)',
-                                    $message->getMic(), $receivedMic));
+                                throw new \RuntimeException(
+                                    sprintf('MIC mismatch. Required: %s, Returned: %s', $message->getMic(), $receivedMic)
+                                );
                             }
 
                             $message->setMdnStatus(MessageInterface::MDN_STATUS_RECEIVED);
